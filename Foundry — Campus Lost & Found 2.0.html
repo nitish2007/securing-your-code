@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Foundry — Campus Lost &amp; Found</title>
+<style>
+:root{--ink:#1c2923;--muted:#667066;--paper:#f7f6f2;--card:#fff;--soft:#f8f8f5;--green:#214e3d;--lime:#d9f078;--line:#e9e8e1;--accent:#63816d;--danger:#a35438;--tab:#e8eee8;--c1:#f2eee7;--c2:#eaf0f3;--c3:#f4e9e5;--c4:#e9eee5;--c5:#f2efdc;--c6:#eeebf5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#eef2ee;--muted:#9aa59c;--paper:#121a16;--card:#1a251f;--soft:#222f28;--green:#2f6b53;--line:#2b3830;--accent:#8dc28b;--danger:#e08c70;--tab:#263a2f;--c1:#2a2a24;--c2:#22303a;--c3:#38292a;--c4:#243326;--c5:#33321f;--c6:#2c2838;color-scheme:dark}}
+:root[data-theme=dark]{--ink:#eef2ee;--muted:#9aa59c;--paper:#121a16;--card:#1a251f;--soft:#222f28;--green:#2f6b53;--line:#2b3830;--accent:#8dc28b;--danger:#e08c70;--tab:#263a2f;--c1:#2a2a24;--c2:#22303a;--c3:#38292a;--c4:#243326;--c5:#33321f;--c6:#2c2838;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shell{max-width:1200px;margin:auto;padding:0 32px}.topbar{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800}.mark{width:34px;height:34px;background:var(--green);border-radius:11px;display:grid;place-items:center;color:var(--lime);font-size:20px}
+.sub{font-size:11px;font-weight:normal;color:var(--muted);align-self:flex-end;margin-bottom:5px}.nav{display:flex;gap:26px;font-size:13px}.nav a{color:var(--muted);text-decoration:none}.nav a:hover{color:var(--ink)}
+.tools{display:flex;gap:8px;align-items:center}.campus,.theme{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:9px 13px;font-size:12px;color:var(--muted)}.theme{width:36px;height:36px;padding:0}
+.hero{padding:50px 0 34px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:40px}
+.eyebrow{font-size:12px;font-weight:bold;color:var(--accent)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8dc28b;margin-right:7px}
+.hero h1{font-size:clamp(40px,5vw,62px);line-height:1.05;letter-spacing:-2.5px;margin:16px 0}.hero h1 span{color:var(--accent)}
+.hero p{font-size:15px;line-height:1.7;color:var(--muted);max-width:510px}
+.stats{display:flex;gap:25px;margin-top:25px;flex-wrap:wrap}.stats b{display:block;font-size:19px}.stats small{color:var(--muted);font-size:12px}
+.hero-card{background:var(--green);color:#fff;border-radius:20px;padding:27px}.hero-card h2{font-size:15px;margin:0 0 14px;color:#d7e1d8}
+.hero-card ol{margin:0;padding:0;list-style:none;display:grid;gap:12px}.hero-card li{font-size:13px;line-height:1.5;color:#fff;display:flex;gap:10px}.hero-card li i{font-style:normal;flex:none;width:22px;height:22px;border-radius:50%;background:var(--lime);color:#214e3d;font-size:11px;font-weight:bold;display:grid;place-items:center}
+.toolbar{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;display:flex;gap:10px;align-items:center}
+.search{flex:1;position:relative}.search span{position:absolute;left:15px;top:10px;color:var(--muted);font-size:18px}.search input{width:100%;height:42px;padding:0 15px 0 43px;border:0;background:var(--soft);border-radius:10px;font-size:13px}
+.filter{height:42px;padding:0 13px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-size:12px}
+.primary{height:42px;padding:0 17px;border:0;background:var(--green);color:#fff;border-radius:10px;font-weight:bold;font-size:12px}.ghost{height:42px;padding:0 17px;border:1px solid var(--line);background:transparent;border-radius:10px;font-size:12px}.danger{color:var(--danger)}
+.tabsrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:28px 0 18px}.tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tab{border:0;background:transparent;color:var(--muted);padding:9px 14px;border-radius:99px;font-size:12px}.tab.active{background:var(--tab);color:var(--ink);font-weight:bold}
+.sort{font-size:12px;color:var(--muted);display:flex;gap:12px;align-items:center}.sort select{border:0;background:none;font-weight:bold}.sort label.chk{display:flex;gap:6px;align-items:center}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.sectionhead h2{font-size:20px;margin:0}.sectionhead span{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;text-align:left;padding:0;display:block;width:100%;transition:transform .18s}.item:hover{transform:translateY(-3px)}
+.item.done{opacity:.65}
+.visual{height:150px;display:grid;place-items:center;position:relative}.visual .emoji{font-size:64px}
+.c1{background:var(--c1)}.c2{background:var(--c2)}.c3{background:var(--c3)}.c4{background:var(--c4)}.c5{background:var(--c5)}.c6{background:var(--c6)}
+.badge{position:absolute;top:12px;left:12px;background:var(--card);border-radius:99px;padding:6px 10px;font-size:11px;font-weight:bold;color:var(--accent)}.badge.lost{color:var(--danger)}.badge.ret{color:var(--muted)}
+.date{position:absolute;top:14px;right:13px;color:var(--muted);font-size:11px}
+.itembody{padding:14px 15px}.itembody h3{margin:0 0 8px;font-size:15px}.location{font-size:12px;color:var(--muted)}
+.itemfoot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.person{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px}.avatar{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:var(--tab);color:var(--accent);font-weight:bold;font-size:10px}.view{font-size:12px;color:var(--accent);font-weight:bold}
+.empty{grid-column:1/-1;padding:50px;text-align:center;background:var(--card);border-radius:14px;color:var(--muted)}
+.modalback{position:fixed;inset:0;background:#10201699;display:none;align-items:center;justify-content:center;padding:20px;z-index:4}.modalback.show{display:flex}
+.modal{width:min(500px,100%);max-height:100%;overflow:auto;background:var(--paper);border-radius:18px;padding:25px}
+.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal h2{font-size:22px;margin:0}.close{background:var(--soft);border:0;border-radius:50%;width:32px;height:32px;font-size:19px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+.field label{font-size:12px;font-weight:bold;color:var(--muted)}.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:11px 12px;font-size:13px}.field textarea{resize:vertical;min-height:70px}
+.privacy{font-size:12px;color:var(--muted);line-height:1.5;margin:14px 0}.submit{width:100%}.visual img,.dvisual img{width:100%;height:100%;object-fit:cover;display:block}.dvisual{overflow:hidden}.dvisual:has(img){height:220px}.prev{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin:8px 0;display:block}
+.dvisual{height:130px;border-radius:12px;display:grid;place-items:center;font-size:60px;margin-bottom:14px}
+.meta{display:grid;gap:8px;font-size:13px;margin:0 0 14px}.meta div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px}.meta span{color:var(--muted)}
+.desc{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 14px}
+.msgs{display:grid;gap:8px;margin:0 0 14px}.msg{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.5}.msg b{display:block;margin-bottom:2px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,20px);background:var(--green);color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:6}.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}footer button{background:none;border:0;color:inherit;text-decoration:underline;padding:0;font-size:12px}
+@media(max-width:800px){.shell{padding:0 20px}.hero{grid-template-columns:1fr;padding-top:36px;gap:25px}.grid{grid-template-columns:repeat(2,1fr)}.nav{gap:15px}}
+@media(max-width:580px){.nav a{display:none}.hero h1{font-size:42px}.stats{gap:18px}.toolbar{flex-wrap:wrap}.search{flex-basis:100%}.filter,.primary{flex:1}.grid{gap:10px}.visual{height:115px}.visual .emoji{font-size:50px}.itembody{padding:11px}.itembody h3{font-size:13px}.location{font-size:11px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.view{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body><div class="shell">
+<header class="topbar"><div class="brand"><div class="mark">⌕</div>foundry <small class="sub">(RIT Roorkee)</small></div>
+<nav class="nav"><a href="#items">Browse items</a><a href="#how">How it works</a><a href="#footer">Help</a></nav>
+<div class="tools"><select class="campus" id="campus" aria-label="Campus"><option>Northfield Campus</option><option>Riverside Campus</option><option>Hillcrest Campus</option></select><button class="theme" id="theme" aria-label="Toggle dark mode">◐</button></div></header>
+<section class="hero"><div><div class="eyebrow"><i class="dot"></i>Your campus, connected</div><h1>Lost something?<br><span>Let’s find it.</span></h1><p>A little help from your campus community goes a long way. Browse recent finds or report a lost item in seconds.</p>
+<div class="stats"><div><b id="sReunited">0</b><small>items reunited</small></div><div><b id="sOpen">0</b><small>still looking for owners</small></div><div><b id="sRate">0%</b><small>found their way home</small></div></div></div>
+<div class="hero-card" id="how"><h2>How it works</h2><ol><li><i>1</i>Post what you lost or found, and where.</li><li><i>2</i>Open an item and send a message to the poster.</li><li><i>3</i>Meet in a public campus spot, then mark the item returned.</li></ol></div></section>
+<main id="items"><div class="toolbar"><div class="search"><span>⌕</span><input id="search" type="search" aria-label="Search items" placeholder="Search by item, place, or keyword…"></div>
+<select class="filter" id="category" aria-label="Category"><option value="all">All categories</option><option>Electronics</option><option>Accessories</option><option>Books</option><option>Keys &amp; Cards</option><option>Other</option></select>
+<select class="filter" id="place" aria-label="Location"><option value="all">All locations</option><option>Library</option><option>Cafeteria</option><option>Science Building</option><option>Student Center</option><option>Sports Hall</option></select>
+<button class="primary" id="report">＋ Report an item</button></div>
+<div class="tabsrow"><div class="tabs" id="tabs"><button class="tab active" data-kind="all">All items</button><button class="tab" data-kind="found">Found items</button><button class="tab" data-kind="lost">Lost items</button></div>
+<div class="sort"><label class="chk"><input type="checkbox" id="showDone"> Show returned</label><span>Sort by <select id="sort"><option value="recent">Most recent</option><option value="oldest">Oldest first</option></select></span></div></div>
+<div class="sectionhead"><h2>Recently reported</h2><span id="resultCount"></span></div><div class="grid" id="grid"></div></main>
+<footer id="footer"><span>© <span id="yr"></span> Foundry · Keep it kind. Keep it on campus.</span><button id="reset">Reset demo data</button></footer></div>
+
+<div class="modalback" id="formBack"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle"><div class="modalhead"><h2 id="formTitle">Report an item</h2><button class="close" data-close aria-label="Close">×</button></div>
+<form id="itemForm"><div class="formgrid"><div class="field"><label for="f-kind">What happened?</label><select id="f-kind" name="kind"><option value="found">I found an item</option><option value="lost">I lost an item</option></select></div>
+<div class="field"><label for="f-cat">Category</label><select id="f-cat" name="category"><option>Other</option><option>Electronics</option><option>Accessories</option><option>Books</option><option>Keys &amp; Cards</option></select></div>
+<div class="field full"><label for="f-title">Item name</label><input id="f-title" name="title" required maxlength="60" placeholder="e.g. Blue water bottle"></div>
+<div class="field"><label for="f-place">Where?</label><select id="f-place" name="place"><option>Library</option><option>Cafeteria</option><option>Science Building</option><option>Student Center</option><option>Sports Hall</option></select></div>
+<div class="field"><label for="f-spot">Spot (optional)</label><input id="f-spot" name="spot" maxlength="40" placeholder="e.g. 2nd floor"></div>
+<div class="field full"><label for="f-person">Your first name</label><input id="f-person" name="person" required maxlength="20" placeholder="First name"></div><div class="field full"><label for="f-phone">Contact number (optional)</label><input id="f-phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="e.g. 98765 43210" autocomplete="off"></div>
+<div class="field full"><label for="f-desc">Details (optional)</label><textarea id="f-desc" name="description" maxlength="240" placeholder="Color, brand, or other helpful details"></textarea></div><div class="field full"><label for="f-img">Photo (optional) — don’t upload ID cards or personal documents</label><input id="f-img" type="file" accept="image/*"><div id="imgPrev"></div></div></div>
+<p class="privacy">Your number is optional and stays hidden until someone taps “Show contact number”. Don’t share student IDs or other sensitive details. Meet in a public campus spot to return an item.</p><button class="primary submit" type="submit">Post report</button></form></div></div>
+
+<div class="modalback" id="detailBack"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="dTitle"><div class="modalhead"><h2 id="dTitle"></h2><button class="close" data-close aria-label="Close">×</button></div><div id="detail"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const KEY='foundry-v2',H=36e5,$=id=>document.getElementById(id);
+const seed=()=>{const n=Date.now();return[
+{id:'s1',kind:'found',title:'AirPods Pro case',category:'Electronics',place:'Library',spot:'2nd floor',ts:n-1*H,person:'Maya R.',emoji:'🎧',color:'c2',description:'White case, found near the quiet study area.',status:'open',msgs:[]},
+{id:'s2',kind:'lost',title:'Green Hydro Flask',category:'Accessories',place:'Science Building',spot:'Lab 204',ts:n-2.5*H,person:'Aarav K.',emoji:'🧴',color:'c4',description:'Dark green bottle with a few stickers.',status:'open',msgs:[]},
+{id:'s3',kind:'found',title:'Calculus textbook',category:'Books',place:'Cafeteria',spot:'Window seats',ts:n-20*H,person:'Jules T.',emoji:'📗',color:'c5',description:'Calculus: Early Transcendentals, 8th edition.',status:'open',msgs:[]},
+{id:'s4',kind:'found',title:'Set of keys',category:'Keys & Cards',place:'Student Center',spot:'Front desk',ts:n-22*H,person:'Sam P.',emoji:'🔑',color:'c3',description:'Three keys on a small blue key ring.',status:'open',msgs:[]},
+{id:'s5',kind:'lost',title:'Black Sony headphones',category:'Electronics',place:'Sports Hall',spot:'Court B',ts:n-48*H,person:'Nina L.',emoji:'🎧',color:'c6',description:'Black over-ear headphones, Sony logo.',status:'open',msgs:[]},
+{id:'s6',kind:'found',title:'Beige knit cardigan',category:'Accessories',place:'Library',spot:'Ground floor',ts:n-52*H,person:'Leo D.',emoji:'🧥',color:'c3',description:'Beige cardigan left on a chair near the entrance.',status:'open',msgs:[]}]};
+const BASE={reunited:248,total:300};
+let store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let items;try{items=JSON.parse(store.get(KEY)||'null')}catch(e){items=null}if(!Array.isArray(items))items=seed();
+const save=()=>{if(!store.set(KEY,JSON.stringify(items)))toast('Storage full: this post may not be saved after reload. Try a smaller photo.')};
+let dbc=null;
+function persist(x){if(dbc){dbc.doc(x.id).set(x).catch(()=>toast('Could not save to shared storage. You may only have view access.'))}else save()}
+function unpersist(id){if(dbc){dbc.doc(id).delete().catch(()=>toast('Could not delete from shared storage.'))}else save()}
+let myId=null;
+function initDb(n){n=n||0;if(!window.claude||!claude.use){if(n<50)setTimeout(()=>initDb(n+1),200);return}const t=setTimeout(()=>toast('Shared storage is slow to respond.'),10000);
+ Promise.all([claude.use('db'),claude.use('user').catch(()=>null)]).then(async([db,u])=>{if(!db){clearTimeout(t);return}
+  try{myId=u?await u.id():null}catch(e){}
+  dbc=db.collection('items');
+  const mine=items.filter(i=>i.userAdded);if(mine.length&&!store.get('foundry-migrated')){mine.forEach(i=>{i.uid=myId;dbc.doc(i.id).set(i).catch(()=>{})});store.set('foundry-migrated','1')}
+  items=[];render();
+  dbc.onSnapshot(s=>{clearTimeout(t);items=s.docs.map(d=>{const v=JSON.parse(JSON.stringify(d.data()||{}));v.msgs=v.msgs||[];return v}).filter(v=>v.id);render()},()=>{clearTimeout(t);toast('Shared storage error. Try reloading the page.')})},()=>clearTimeout(t))}
+let kind='all',openId=null;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const loc=x=>x.place+(x.spot?' · '+x.spot:'');
+function ago(ts){const m=Math.max(0,(Date.now()-ts)/6e4);if(m<1)return'Just now';if(m<60)return Math.floor(m)+' min ago';const h=m/60;if(h<24)return Math.floor(h)+' hr ago';const d=Math.floor(h/24);return d===1?'Yesterday':d+' days ago'}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2600)}
+function stats(){const done=items.filter(x=>x.status==='returned').length,open=items.length-done;const r=BASE.reunited+done,t=BASE.total+items.filter(x=>x.userAdded).length;$('sReunited').textContent=r;$('sOpen').textContent=open;$('sRate').textContent=Math.round(r/t*100)+'%'}
+function render(){
+ const q=$('search').value.toLowerCase().trim(),cat=$('category').value,pl=$('place').value,so=$('sort').value,sd=$('showDone').checked;
+ const base=items.filter(x=>(sd||x.status!=='returned')&&(cat==='all'||x.category===cat)&&(pl==='all'||x.place===pl)&&(`${x.title} ${loc(x)} ${x.category} ${x.description||''}`).toLowerCase().includes(q));
+ document.querySelectorAll('.tab').forEach(b=>{const k=b.dataset.kind,n=base.filter(x=>k==='all'||x.kind===k).length,l={all:'All items',found:'Found items',lost:'Lost items'}[k];b.textContent=`${l} (${n})`;b.classList.toggle('active',k===kind)});
+ const list=base.filter(x=>kind==='all'||x.kind===kind).sort((a,b)=>so==='recent'?b.ts-a.ts:a.ts-b.ts);
+ $('resultCount').textContent=`${list.length} ${list.length===1?'item':'items'}`;
+ $('grid').innerHTML=list.length?list.map(x=>`<button class="item ${x.status==='returned'?'done':''}" data-id="${esc(x.id)}" aria-label="View details: ${esc(x.title)}"><div class="visual ${esc(x.color)}"><span class="badge ${x.status==='returned'?'ret':x.kind==='lost'?'lost':''}">${x.status==='returned'?'Returned':x.kind==='lost'?'Lost item':'Found item'}</span><span class="date">${ago(x.ts)}</span>${x.img?`<img src="${x.img}" alt="">`:`<span class="emoji">${x.emoji}</span>`}</div><div class="itembody"><h3>${esc(x.title)}</h3><div class="location">⌖ ${esc(loc(x))}</div><div class="itemfoot"><div class="person"><span class="avatar">${esc((x.person||'C')[0].toUpperCase())}</span>${esc(x.person)}</div><span class="view">View details</span></div></div></button>`).join(''):'<div class="empty">No items match. Clear a filter, or report an item to help the community.</div>';
+ stats()}
+function showDetail(id){
+ const x=items.find(i=>i.id===id);if(!x)return;openId=id;$('dTitle').textContent=x.title;const ret=x.status==='returned',lost=x.kind==='lost';
+ $('detail').innerHTML=`<div class="dvisual ${esc(x.color)}">${x.img?`<img src="${x.img}" alt="${esc(x.title)}">`:x.emoji}</div><div class="meta"><div><span>Status</span><b>${ret?'Returned':lost?'Lost — still looking':'Found — waiting for owner'}</b></div><div><span>Where</span>${esc(loc(x))}</div><div><span>Category</span>${esc(x.category)}</div><div><span>Reported</span>${ago(x.ts)} by ${esc(x.person)}</div></div>
+ ${x.description?`<p class="desc">${esc(x.description)}</p>`:''}
+ ${x.phone&&!ret?`<div class="contact"><button class="ghost" id="showPh" type="button">Show contact number</button></div>`:''}
+ ${x.msgs.length?`<div class="msgs">${x.msgs.map(m=>`<div class="msg"><b>${esc(m.name)} · ${ago(m.ts)}</b>${esc(m.text)}</div>`).join('')}</div>`:''}
+ ${ret?'':`<form id="claimForm"><div class="formgrid"><div class="field"><label for="c-name">Your first name</label><input id="c-name" required maxlength="20"></div><div class="field full"><label for="c-text">${lost?'Tell them where you saw it':'Describe what’s yours so the finder can verify'}</label><textarea id="c-text" required maxlength="240" placeholder="${lost?'e.g. I saw it near the vending machines':'e.g. Cracked corner, sticker on the back'}"></textarea></div></div><p class="privacy">Keep contact details out of messages. Arrange a handoff in a public campus spot.</p><button class="primary submit" type="submit">${lost?'I’ve seen this item':'This is mine'}</button></form>
+ <div class="actions"><button class="ghost" id="markRet">Mark as returned</button>${(dbc?(x.uid&&x.uid===myId):x.userAdded)?'<button class="ghost danger" id="delItem">Delete my post</button>':''}</div>`}`;
+ $('detailBack').classList.add('show')}
+function closeAll(){document.querySelectorAll('.modalback').forEach(m=>m.classList.remove('show'));openId=null}
+$('grid').onclick=e=>{const b=e.target.closest('.item');if(b)showDetail(b.dataset.id)};
+$('detail').onsubmit=e=>{e.preventDefault();const x=items.find(i=>i.id===openId);x.msgs.push({name:$('c-name').value.trim(),text:$('c-text').value.trim(),ts:Date.now()});persist(x);toast('Message sent to '+x.person);showDetail(openId)};
+$('detail').onclick=e=>{const x=items.find(i=>i.id===openId);if(!x)return;
+ if(e.target.id==='showPh'){const p=esc(x.phone),t=x.phone.replace(/[^0-9+]/g,'');e.target.parentNode.innerHTML='<p class="desc">Contact: <a href="tel:'+t+'">'+p+'</a><br>Use it only to arrange returning this item.</p>';return}
+ if(e.target.id==='markRet'){if(confirm('Mark this item as returned? It will be hidden from the main list.')){x.status='returned';persist(x);closeAll();render();toast('Marked as returned. Thanks for helping out!')}}
+ if(e.target.id==='delItem'){if(confirm('Delete this post?')){items=items.filter(i=>i.id!==x.id);unpersist(x.id);closeAll();render();toast('Post deleted')}}};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{kind=b.dataset.kind;render()});
+['search','category','place','sort','showDone'].forEach(id=>$(id).addEventListener('input',render));
+$('report').onclick=()=>{$('formBack').classList.add('show');$('f-title').focus()};
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeAll);
+document.querySelectorAll('.modalback').forEach(m=>m.onclick=e=>{if(e.target===m)closeAll()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+let pendingImg='';
+$('f-img').onchange=e=>{const f=e.target.files[0];pendingImg='';$('imgPrev').innerHTML='';if(!f)return;if(!f.type.startsWith('image/')){toast('Please choose an image file');e.target.value='';return}
+const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);pendingImg=c.toDataURL('image/jpeg',.65);$('imgPrev').innerHTML='<img class="prev" src="'+pendingImg+'" alt="Preview"><button type="button" class="ghost" id="rmImg">Remove photo</button>'};im.onerror=()=>toast('Could not read that image');im.src=r.result};r.readAsDataURL(f)};
+$('imgPrev').onclick=e=>{if(e.target.id==='rmImg'){pendingImg='';$('imgPrev').innerHTML='';$('f-img').value=''}};
+const em={Electronics:'🎧',Books:'📚','Keys & Cards':'🔑',Accessories:'🧢',Other:'📦'};
+$('itemForm').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),t=d.title.trim();if(!t||!d.person.trim())return;const ph=(d.phone||'').trim();if(ph&&!/^\+?[0-9\s-]{7,15}$/.test(ph)){toast('Enter a valid phone number, or leave it empty');return}
+ items.unshift({id:'u'+Date.now(),kind:d.kind,title:t,category:d.category,place:d.place,spot:d.spot.trim(),ts:Date.now(),person:d.person.trim(),emoji:em[d.category]||'📦',img:pendingImg,phone:ph,color:'c'+(1+Math.floor(Math.random()*6)),description:d.description.trim(),status:'open',msgs:[],userAdded:true,uid:myId});
+ persist(items[0]);pendingImg='';$('imgPrev').innerHTML='';e.target.reset();closeAll();kind='all';['search'].forEach(i=>$(i).value='');$('category').value='all';$('place').value='all';render();toast('Your report has been posted.')};
+$('reset').onclick=()=>{if(dbc){toast('Reset is turned off while shared storage is on');return}if(confirm('Remove your posts and restore the sample items?')){items=seed();store.del(KEY);render();toast('Demo data restored')}};
+$('campus').onchange=()=>toast('Showing '+$('campus').value);
+$('theme').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=dark?'light':'dark'};
+$('yr').textContent=new Date().getFullYear();render();setInterval(render,6e4);initDb();
+</script></body></html>
